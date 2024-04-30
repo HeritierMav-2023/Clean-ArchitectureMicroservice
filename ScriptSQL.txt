@@ -1,0 +1,66 @@
+
+--
+--
+--
+USE ADO_DB;
+GO
+--
+-- Table structure for table jobs
+--
+CREATE TABLE [dbo].[Jobs](
+	[JOB_ID] [int] primary key identity(1,1),
+	[JOB_SHORT_TITLE] [nvarchar](10) NULL,
+	[JOB_LONG_TITLE] [nvarchar](35) NULL,
+	[MIN_SALARY] [money] NULL,
+	[MAX_SALARY] [money] NULL,
+	[AddedOn]  [date] NULL,
+    [ModifiedOn] [date] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+CREATE PROCEDURE [dbo].[Usp_InsertUpdateDeleteOrGetAllJob]
+(
+	@Id INT = null,
+	@ShortTitle NVARCHAR(10) = NULL,
+	@LongTitle NVARCHAR(35) = NULL,
+	@MinSal  [money] NULL,
+	@MaxSal  [money] NULL,
+	@DateAdded DATE = NULL,
+	@DateModified DATE = NULL,
+	@Action INT = 0
+)
+AS
+BEGIN
+	IF @Action = 1
+	BEGIN
+		SELECT * FROM [dbo].[Jobs]
+	END
+
+	IF @Action = 2
+	BEGIN
+		SELECT * FROM [dbo].[Jobs] WHERE [JOB_ID]= @Id
+	END
+
+	IF @Action = 3
+	BEGIN
+		INSERT INTO [dbo].[Jobs] VALUES (@ShortTitle, @LongTitle, @MinSal, @MaxSal,@DateAdded,@DateModified)
+	END
+
+	IF @Action = 4
+	BEGIN
+		UPDATE [dbo].[Jobs] 
+		SET JOB_SHORT_TITLE = @ShortTitle, 
+			JOB_SHORT_LONG = @LongTitle, 
+			MIN_SALARY = @MinSal, MAX_SALARY = @MaxSal, 
+			AddedOn=@DateAdded, ModifiedOn=@DateModified 
+		WHERE [JOB_ID]= @Id
+	END
+
+	IF @Action = 5
+	BEGIN
+		DELETE FROM [dbo].[Jobs] WHERE [JOB_ID] = @Id
+	END
+END
+
+   

@@ -1,0 +1,19 @@
+﻿
+CREATE TABLE [dbo].[Employees](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [nvarchar](max) NOT NULL,
+	[LastName] [nvarchar](max) NOT NULL,
+	[Email] [nvarchar](max) NOT NULL,
+	[PhoneNumber] [nvarchar](max) NOT NULL,
+	[HireDate] [datetime2](7) NOT NULL,
+	[Salary] [money] NOT NULL,
+	[ComissionPCT] [int] NOT NULL,
+	[ManagerId] [int] NOT NULL,
+	[JobId] [nvarchar](max) NOT NULL,
+	[Departement] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Employees] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO

@@ -1,0 +1,82 @@
+{
+  "Routes": [
+    {
+      //---Employee Service: Debut ----------//
+      "DownstreamPathTemplate": "/api/employees",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5263
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/employees",
+      "UpstreamHttpMethod": [ "Get" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/employees/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/employees/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5263
+        }
+      ],
+
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+      //---Employee Service: Fin ----------//
+    },
+
+    {
+      //---Location Service: Debut ----------//
+      "DownstreamPathTemplate": "/api/location",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5246
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/location",
+      "UpstreamHttpMethod": [ "Get" ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/gateway/location/{id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/location/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5246
+        }
+      ],
+
+      "FileCacheOptions": {
+        "TtlSeconds": 10
+      }
+      //---Location Service: Fin ----------//
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5145"
+  }
+}

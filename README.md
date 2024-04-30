@@ -1,2 +1,1 @@
-# Clean-ArchitectureMicroservice
-Microservice and EF core, Ado.Net
+# CleanArchitecture-MicroService(EF-Dapper-ADONet)

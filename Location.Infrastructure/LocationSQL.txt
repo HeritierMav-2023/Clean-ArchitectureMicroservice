@@ -1,0 +1,68 @@
+﻿CREATE TABLE [dbo].[LOCATION](
+    [Id] [int] IDENTITY(1,1) NOT NULL,
+	[LOCATId] [int] NOT NULL,
+	[STREET_ADRESS] [nvarchar](max) NULL,
+	[POSTAL_CODE] [nvarchar](max) NULL,
+	[CITY] [nvarchar](max) NULL,
+	[PROVINCE] [nvarchar](max) NULL,
+	[COUNTRY] [nvarchar](max) NULL,
+	[DATECREATED] [date] NULL,
+	[DATEUPDATE] [date] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+
+-- =============================================
+-- Author:		Heritier MAVINGA
+-- Create date: 2024-03-22
+-- Description:	Create, Delete, Update OR Get Location
+-- =============================================
+CREATE PROCEDURE [dbo].[Usp_ADDwithEDITorDELandGETLocation]
+	-- Declaration paramètre
+	@LocationId INT = NULL,
+	@Address NVARCHAR(150) = NULL,
+	@Postal NVARCHAR(50) = NULL,
+	@City NVARCHAR(50) = NULL,
+	@Province NVARCHAR(150) = NULL,
+	@Country NVARCHAR(50) = NULL,
+	@CreateOn DATE = NULL,
+	@UpdateOn DATE = NULL,
+	@Action NVARCHAR(10) = NULL
+AS
+BEGIN
+	IF @Action = 'GetAll'
+	BEGIN
+		SELECT * FROM [dbo].[LOCATION]
+	END
+
+	IF @Action = 'GetData'
+	BEGIN
+		SELECT * FROM [dbo].[LOCATION] WHERE [LOCATId]= @LocationId
+	END
+
+	IF @Action = 'Add'
+	BEGIN
+		INSERT INTO [dbo].[LOCATION] VALUES (@LocationId,@Address,@Postal, @City, @Province, @Country,@CreateOn,@UpdateOn)
+	END
+
+	IF @Action = 'Edit'
+	BEGIN
+		UPDATE [dbo].[LOCATION]
+		SET 
+		    [STREET_ADRESS] = @Address, 
+			[POSTAL_CODE] = @Postal, 
+			[CITY] = @City, 
+			[PROVINCE] = @Province, 
+			[COUNTRY] = @Country,
+			[DATECREATED]=@CreateOn,
+			[DATEUPDATE]=@UpdateOn 
+
+		WHERE [LOCATId]= @LocationId
+	END
+
+	IF @Action = 'Delete'
+	BEGIN
+		DELETE FROM [dbo].[LOCATION] WHERE [LOCATId]= @LocationId
+	END
+END
+GO
